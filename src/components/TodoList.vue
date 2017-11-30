@@ -156,6 +156,7 @@ export default {
       const token = sessionStorage.getItem('demo-token');
       if(token != null && token != 'null'){
         let decode = jwt.verify(token,'vue-koa-demo');
+        console.log(decode)
         return decode
       }else {
         return null

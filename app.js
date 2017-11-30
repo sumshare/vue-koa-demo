@@ -1,5 +1,7 @@
 // "server": "nodemon --delay 2000ms -w app.js -w server server-entry.js"
 // 真正入口是server-entry.js
+
+// 请运行npm run server来启动后台 npm run dev 启动前台
 import Koa from 'koa';
 import json from 'koa-json';
 import logger from 'koa-logger';
@@ -27,7 +29,7 @@ app.use(async function(ctx, next) {
 });
 
 //  如果JWT验证失败，返回验证失败信息
-app.use(async function(ctx, next) { 
+app.use(async function(ctx, next) {
     try {
         await next();
     } catch (err) {
@@ -59,6 +61,9 @@ app.use(router.routes());
 app.use(historyApiFallback());
 
 // 将webpack打包好的项目目录作为Koa静态文件服务的目录
+// 在run dev中工程跑在8080端口，
+// 这里将生产环境指向dist目录
+// http://localhost:8889/todolist
 app.use(serve(path.resolve('dist')));
 
 app.listen(8889, () => {
